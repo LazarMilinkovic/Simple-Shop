@@ -77,12 +77,19 @@ button{
 }
 .cart-single-item{
   display: flex;
-  justify-content: baseline;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
 }
-.cart-single-items-button{
-  padding: 5px;
+.cart-single-item > h3{
+  margin-top: 13px;
+  margin-left: 10px;
+}
+.cart-single-item > button{
+  font-size: 15px;
+  margin-right: 10px;
 }
 .total-price{
   position: absolute;

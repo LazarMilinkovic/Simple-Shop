@@ -19,7 +19,7 @@ const addToCart = (btn) =>{
     cartElement.innerHTML += `<div class = "cart-single-item">
                                 <h3>${itemName}</h3>
                                 <p>${stringPrice} * ${quantity} = $<span>${itemTotalPrice}</span></p>
-                                <button onClick="removeFromCart(this)">Remove</button>
+                                <button class =".cart-single-items-button" onClick="removeFromCart(this)">Remove</button>
                               </div>`
     item.querySelector("input").setAttribute("disabled","true")
     item.querySelector("input").value = quantity;
