@@ -1,6 +1,7 @@
 let totalPrice = 0;
 const totalElement = document.querySelector(".total-price");
 const cartElement = document.querySelector(".cart-items");
+let itemTotalPrice = 0;
 
 const addToCart = (btn) =>{
   const item = btn.closest(".single-item");
@@ -12,7 +13,7 @@ const addToCart = (btn) =>{
 
   if(quantity > 0){
 
-    let itemTotalPrice = quantity * price;
+    itemTotalPrice = quantity * price;
     totalPrice = totalPrice + itemTotalPrice;
     totalElement.innerHTML = `Total: $${totalPrice}`;
     cartElement.innerHTML += `<div class = "cart-single-item">
@@ -20,7 +21,11 @@ const addToCart = (btn) =>{
                                 <p>${stringPrice} * ${quantity} = $<span>${itemTotalPrice}</span></p>
                                 <button onClick="removeFromCart(this)">Remove</button>
                               </div>`
-    inputElement.value = quantity;
+    item.querySelector("input").setAttribute("disabled","true")
+    item.querySelector("input").value = quantity;
+    item.querySelector("button").setAttribute("disabled","true");
+    item.querySelector("button").innerText = "Added";
+    
   }
   else{
     console.error(`You can not add 0 ${itemName}s.`);
@@ -28,19 +33,20 @@ const addToCart = (btn) =>{
 }
 
 const removeFromCart = (btn) => {
-  const mainElement = btn.closest(".cart-single-item");
-  const itemName = mainElement.querySelector("h3");
+  const item = btn.closest(".cart-single-item");
+  const itemName = item.querySelector("h3").innerText;
+  const price = parseInt(item.querySelector("span").innerText);
   const products = document.querySelectorAll(".single-item");
-  const price = parseInt(mainElement.querySelector("span").innerText);
-  mainElement.remove();
-
-  products.forEach((singeVegeItem) => {
-    const name = singeVegeItem.querySelector("h3").innerText;
-    if(name === itemName) {
-      singeVegeItem.querySelector("input").value = 0;
-      singeVegeItem.querySelector("input").removeAttribute("disabled");
-      singeVegeItem.querySelector("button").innerText = "Add";
-      singeVegeItem.querySelector("button").removeAttribute("disabled");
+  itemTotalPrice -= price;
+  totalElement.innerText = `Total: $${itemTotalPrice}`;
+  item.remove();
+  products.forEach((product) => {
+    const name = product.querySelector("h3").innerText;
+    if(name === itemName){
+      product.querySelector("input").value = 0;
+      product.querySelector("input").removeAttribute("disabled");
+      product.querySelector("button").innerText = "Add";
+      product.querySelector("button").removeAttribute("disabled");
     }
   });
 }
